@@ -92,11 +92,25 @@ Calculator.prototype.round = function (number) {
   return Math.round(number * 1000) / 1000;
 };
 
+// Splices numbers every 3 digits
+Calculator.prototype.separate = function (number) {
+  const stringNumber = number.toString();
+  const integerDigits = parseFloat(stringNumber.split('.')[0]);
+  const decimalDigits = stringNumber.split('.')[1];
+
+  let integerDisplay = isNaN(integerDigits)
+    ? ''
+    : integerDigits.toLocaleString('en', { maximumFractionDigits: 0 });
+
+  if (decimalDigits !== undefined) return `${integerDisplay}.${decimalDigits}`;
+  else return integerDisplay;
+};
+
 // Handles display update
 Calculator.prototype.update = function () {
-  this.curr.innerText = this.state.currentOperand;
+  this.curr.innerText = this.separate(this.state.currentOperand);
   this.prev.innerText = this.state.operation
-    ? `${this.state.previousOperand} ${this.state.operation}`
+    ? `${this.separate(this.state.previousOperand)} ${this.state.operation}`
     : '';
 };
 
