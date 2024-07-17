@@ -125,8 +125,10 @@ button:active {
 }
 
 .__display-element {
-  height: 2rem;
-  display: flex;
+  height: 3rem;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .previous-operand {

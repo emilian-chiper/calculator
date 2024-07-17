@@ -128,6 +128,9 @@ Calculator.prototype.update = function () {
   this.prev.innerText = this.state.operation
     ? `${this.separate(this.state.previousOperand)} ${this.state.operation}`
     : '';
+
+  adjustFontSize(this.curr);
+  adjustFontSize(this.prev);
 };
 
 // Instantiate object
@@ -150,6 +153,21 @@ const attachEventListeners = function () {
   operators.forEach(btn =>
     btn.addEventListener('click', () => calculator.operate(btn.innerText))
   );
+};
+
+const adjustFontSize = function (element) {
+  const maxFontSize = 2;
+  const minFontSize = 0.5;
+  const widthThreshold = element.offsetWidth;
+
+  element.style.fontSize = `${maxFontSize}rem`;
+
+  while (
+    element.scrollWidth > widthThreshold &&
+    parseFloat(element.style.fontSize) > minFontSize
+  ) {
+    element.style.fontSize = `${parseFloat(element.style.fontSize) - 0.1}rem`;
+  }
 };
 
 attachEventListeners();
