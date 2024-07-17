@@ -1,18 +1,39 @@
 window.addEventListener('DOMContentLoaded', function () {
   const main = function () {
-    // DOM Elements
+    /**
+     * DOM Elements
+     * @type {HTMLElement[]}
+     */
     const [previousOperandElement, currentOperandElement] = [
       ...document.querySelectorAll('.__display-element'),
     ];
+
+    /**
+     * Action buttons
+     * @type {HTMLElement[]}
+     */
     const [clearBtn, deleteBtn, signBtn, equalsBtn] = [
       ...document.querySelectorAll('.__action'),
     ];
-    console.log(clearBtn, deleteBtn, signBtn, equalsBtn);
 
+    /**
+     * Operand buttons
+     * @type {HTMLElement[]}
+     */
     const operands = [...document.querySelectorAll('.operand')];
+
+    /**
+     * Operator buttons
+     * @type {HTMLElement[]}
+     */
     const operators = [...document.querySelectorAll('.operator')];
 
-    // Object constructor
+    /**
+     * Calculator object constructor
+     * @constructor
+     * @param {HTMLElement} prev - Previous operand element
+     * @param {HTMLElement} curr - Current operand element
+     */
     const Calculator = function (prev, curr) {
       this.prev = prev;
       this.curr = curr;
@@ -23,7 +44,9 @@ window.addEventListener('DOMContentLoaded', function () {
       };
     };
 
-    // Method for clearing the display
+    /**
+     * Clears the calculator display and state
+     */
     Calculator.prototype.clear = function () {
       this.state.previousOperand = '';
       this.state.currentOperand = '';
@@ -33,7 +56,9 @@ window.addEventListener('DOMContentLoaded', function () {
       this.update();
     };
 
-    // Method for deleting the last character
+    /**
+     * Toggles the sign of the current operand
+     */
     Calculator.prototype.delete = function () {
       this.state.currentOperand = this.state.currentOperand
         .toString()
@@ -51,7 +76,10 @@ window.addEventListener('DOMContentLoaded', function () {
       this.update();
     };
 
-    // Handles functionality of the operand buttons
+    /**
+     * Appends a number to the current operand
+     * @param {string} number - The number to append
+     */
     Calculator.prototype.append = function (number) {
       if (number === '.' && this.state.currentOperand.includes('.')) return;
       this.state.currentOperand += number;
@@ -59,7 +87,10 @@ window.addEventListener('DOMContentLoaded', function () {
       this.update();
     };
 
-    // Handles functionality of the operator buttons
+    /**
+     * Sets the operation and moves the current operand to previous operand
+     * @param {string} op - The operator
+     */
     Calculator.prototype.operate = function (op) {
       if (this.state.currentOperand === '') return;
       if (this.state.previousOperand !== '') this.compute();
@@ -70,7 +101,9 @@ window.addEventListener('DOMContentLoaded', function () {
       this.update();
     };
 
-    // Handles computation
+    /**
+     * Computes the result of the operation
+     */
     Calculator.prototype.compute = function () {
       let computation;
       const prev = parseFloat(this.state.previousOperand);
@@ -107,12 +140,20 @@ window.addEventListener('DOMContentLoaded', function () {
       this.update();
     };
 
-    // Rounds decimals
+    /**
+     * Rounds a number to three decimal places
+     * @param {number} number - The number to round
+     * @returns {number} - The rounded number
+     */
     Calculator.prototype.round = function (number) {
       return Math.round(number * 1000) / 1000;
     };
 
-    // Splices numbers every 3 digits
+    /**
+     * Formats a number with commas
+     * @param {number} number - The number to format
+     * @returns {string} - The formatted number
+     */
     Calculator.prototype.separate = function (number) {
       const stringNumber = number.toString();
       const integerDigits = parseFloat(stringNumber.split('.')[0]);
@@ -127,39 +168,10 @@ window.addEventListener('DOMContentLoaded', function () {
       else return integerDisplay;
     };
 
-    // Handles display update
-    Calculator.prototype.update = function () {
-      this.curr.innerText = this.separate(this.state.currentOperand);
-      this.prev.innerText = this.state.operation
-        ? `${this.separate(this.state.previousOperand)} ${this.state.operation}`
-        : '';
-
-      adjustFontSize(this.curr);
-      adjustFontSize(this.prev);
-    };
-
-    // Instantiate object
-    const calculator = new Calculator(
-      previousOperandElement,
-      currentOperandElement
-    );
-
-    // Add event listeners for buttons
-    const attachEventListeners = function () {
-      clearBtn.addEventListener('click', () => calculator.clear());
-      deleteBtn.addEventListener('click', () => calculator.delete());
-      signBtn.addEventListener('click', () => calculator.toggleSign());
-      equalsBtn.addEventListener('click', () => calculator.compute());
-
-      operands.forEach(btn =>
-        btn.addEventListener('click', () => calculator.append(btn.innerText))
-      );
-
-      operators.forEach(btn =>
-        btn.addEventListener('click', () => calculator.operate(btn.innerText))
-      );
-    };
-
+    /**
+     * Adjusts the font size based on the width of the element
+     * @param {HTMLElement} element - The element to adjust font size for
+     */
     const adjustFontSize = function (element) {
       const maxFontSize = 2;
       const minFontSize = 0.5;
@@ -175,6 +187,45 @@ window.addEventListener('DOMContentLoaded', function () {
           parseFloat(element.style.fontSize) - 0.1
         }rem`;
       }
+    };
+
+    /**
+     * Updates the display elements
+     */
+    Calculator.prototype.update = function () {
+      this.curr.innerText = this.separate(this.state.currentOperand);
+      this.prev.innerText = this.state.operation
+        ? `${this.separate(this.state.previousOperand)} ${this.state.operation}`
+        : '';
+
+      adjustFontSize(this.curr);
+      adjustFontSize(this.prev);
+    };
+
+    /**
+     * Instantiates a Calculator object
+     */
+    const calculator = new Calculator(
+      previousOperandElement,
+      currentOperandElement
+    );
+
+    /**
+     * Adds event listeners to buttons
+     */
+    const attachEventListeners = function () {
+      clearBtn.addEventListener('click', () => calculator.clear());
+      deleteBtn.addEventListener('click', () => calculator.delete());
+      signBtn.addEventListener('click', () => calculator.toggleSign());
+      equalsBtn.addEventListener('click', () => calculator.compute());
+
+      operands.forEach(btn =>
+        btn.addEventListener('click', () => calculator.append(btn.innerText))
+      );
+
+      operators.forEach(btn =>
+        btn.addEventListener('click', () => calculator.operate(btn.innerText))
+      );
     };
 
     attachEventListeners();
