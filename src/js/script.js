@@ -20,8 +20,19 @@ const Calculator = function (prev, curr) {
   console.log(this);
 };
 
+// Method for clearing the display
+Calculator.prototype.clear = function () {
+  this.state.previousOperand = '';
+  this.state.currentOperand = '';
+  this.state.operations = undefined;
+  this.prev.innerText = '';
+  this.curr.innerText = '';
+};
+
 // Instantiate object
 const calculator = new Calculator(
   previousOperandElement,
   currentOperandElement
 );
+
+calculator.clear();
