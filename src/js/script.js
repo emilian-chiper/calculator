@@ -17,7 +17,11 @@ const Calculator = function (prev, curr) {
     currentOperand: '',
     operations: undefined,
   };
-  console.log(this);
+  console.log(
+    this,
+    typeof this.state.previousOperand,
+    typeof this.state.currentOperand
+  );
 };
 
 // Method for clearing the display
@@ -29,10 +33,22 @@ Calculator.prototype.clear = function () {
   this.curr.innerText = '';
 };
 
+// Handles functionality of the operand buttons
+Calculator.prototype.append = function (number) {
+  if (number === '.' && this.state.currentOperand.includes('.')) return;
+  this.state.currentOperand += number;
+  console.log(this.state.currentOperand, typeof this.state.currentOperand);
+};
+
 // Instantiate object
 const calculator = new Calculator(
   previousOperandElement,
   currentOperandElement
 );
 
-calculator.clear();
+// calculator.clear();
+operands.forEach(btn =>
+  btn.addEventListener('click', () => {
+    calculator.append(btn.innerText);
+  })
+);
