@@ -14,7 +14,7 @@
   --btn-hover-box-shadow: rgba(255, 255, 255, 0.9) 0 3px 2px inset,
     rgba(0, 0, 0, 0.4) 0 3px 5px, rgba(0, 0, 0, 0.1) 0 10px 13px;
   --display-bg-color: rgba(0, 0, 0, 0.45);
-  --display-border-radius: 35px;
+  --display-border-radius: 25px;
   --previous-operand-color: rgba(255, 255, 255, 0.75);
   --previous-operand-font-size: 1.5rem;
   --current-operand-color: #ffffff;
@@ -122,6 +122,11 @@ button:active {
   word-wrap: break-word;
   word-break: break-all;
   background-color: var(--display-bg-color);
+}
+
+.__display-element {
+  height: 2rem;
+  display: flex;
 }
 
 .previous-operand {
