@@ -129,6 +129,7 @@ button:active {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
+  text-align: right;
 }
 
 .previous-operand {
@@ -186,4 +187,12 @@ button:active {
 .footer {
   min-height: 5vh;
   color: var(--footer-color);
+}
+
+@media screen and (max-width: 540px) {
+  .calculator {
+    grid-template-columns: repeat(4, 4rem);
+    grid-template-rows: minmax(5rem, auto) repeat(5, 4rem);
+    gap: 0.5rem;
+  }
 }
