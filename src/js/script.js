@@ -82,9 +82,14 @@ Calculator.prototype.compute = function () {
       return;
   }
 
-  this.state.currentOperand = computation.toString();
+  this.state.currentOperand = this.round(computation);
   this.state.previousOperand = '';
   this.state.operation = undefined;
+};
+
+// Rounds decimals
+Calculator.prototype.round = function (number) {
+  return Math.round(number * 1000) / 1000;
 };
 
 // Handles display update
