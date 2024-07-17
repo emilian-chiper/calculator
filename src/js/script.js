@@ -2,9 +2,11 @@
 const [previousOperandElement, currentOperandElement] = [
   ...document.querySelectorAll('.__display-element'),
 ];
-const [clearBtn, deleteBtn, equalsBtn] = [
+const [clearBtn, deleteBtn, signBtn, equalsBtn] = [
   ...document.querySelectorAll('.__action'),
 ];
+console.log(clearBtn, deleteBtn, signBtn, equalsBtn);
+
 const operands = [...document.querySelectorAll('.operand')];
 const operators = [...document.querySelectorAll('.operator')];
 
@@ -33,6 +35,15 @@ Calculator.prototype.clear = function () {
 Calculator.prototype.delete = function () {
   this.state.currentOperand = this.state.currentOperand.toString().slice(0, -1);
   this.curr.innerText = this.state.currentOperand;
+  this.update();
+};
+
+// Toggle the sign of the current operand
+Calculator.prototype.toggleSign = function () {
+  if (this.state.currentOperand === '') return;
+  this.state.currentOperand = (
+    parseFloat(this.state.currentOperand) * -1
+  ).toString();
   this.update();
 };
 
@@ -129,6 +140,7 @@ const calculator = new Calculator(
 const attachEventListeners = function () {
   clearBtn.addEventListener('click', () => calculator.clear());
   deleteBtn.addEventListener('click', () => calculator.delete());
+  signBtn.addEventListener('click', () => calculator.toggleSign());
   equalsBtn.addEventListener('click', () => calculator.compute());
 
   operands.forEach(btn =>

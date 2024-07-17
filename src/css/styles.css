@@ -163,12 +163,13 @@ button:active {
 }
 
 .clear,
-.delete {
+.delete,
+.sign {
   background-color: var(--clear-delete-bg-color);
 }
 
 .clear:hover,
-.delete:hover {
+.delete:hover .sign:hover {
   color: var(--clear-delete-hover-color);
 }
 
