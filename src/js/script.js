@@ -26,12 +26,14 @@ Calculator.prototype.clear = function () {
   this.state.operation = undefined;
   this.prev.innerText = '';
   this.curr.innerText = '';
+  this.update();
 };
 
 // Method for deleting the last character
 Calculator.prototype.delete = function () {
   this.state.currentOperand = this.state.currentOperand.toString().slice(0, -1);
   this.curr.innerText = this.state.currentOperand;
+  this.update();
 };
 
 // Handles functionality of the operand buttons
@@ -39,6 +41,7 @@ Calculator.prototype.append = function (number) {
   if (number === '.' && this.state.currentOperand.includes('.')) return;
   this.state.currentOperand += number;
   this.curr.innerText = this.state.currentOperand;
+  this.update();
 };
 
 // Handles functionality of the operator buttons
@@ -49,6 +52,7 @@ Calculator.prototype.operate = function (op) {
   this.state.operation = op;
   this.state.previousOperand = this.state.currentOperand;
   this.state.currentOperand = '';
+  this.update();
 };
 
 // Handles computation
@@ -85,6 +89,7 @@ Calculator.prototype.compute = function () {
   this.state.currentOperand = this.round(computation);
   this.state.previousOperand = '';
   this.state.operation = undefined;
+  this.update();
 };
 
 // Rounds decimals
@@ -121,31 +126,18 @@ const calculator = new Calculator(
 );
 
 // Add event listeners for buttons
-clearBtn.addEventListener('click', () => {
-  calculator.clear();
-  calculator.update();
-});
+const attachEventListeners = function () {
+  clearBtn.addEventListener('click', () => calculator.clear());
+  deleteBtn.addEventListener('click', () => calculator.delete());
+  equalsBtn.addEventListener('click', () => calculator.compute());
 
-deleteBtn.addEventListener('click', () => {
-  calculator.delete();
-  calculator.update();
-});
+  operands.forEach(btn =>
+    btn.addEventListener('click', () => calculator.append(btn.innerText))
+  );
 
-operands.forEach(btn =>
-  btn.addEventListener('click', () => {
-    calculator.append(btn.innerText);
-    calculator.update();
-  })
-);
+  operators.forEach(btn =>
+    btn.addEventListener('click', () => calculator.operate(btn.innerText))
+  );
+};
 
-operators.forEach(btn =>
-  btn.addEventListener('click', () => {
-    calculator.operate(btn.innerText);
-    calculator.update();
-  })
-);
-
-equalsBtn.addEventListener('click', () => {
-  calculator.compute();
-  calculator.update();
-});
+attachEventListeners();
