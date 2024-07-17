@@ -1,0 +1,181 @@
+/* IMPORTS */
+@import url(https://fonts.bunny.net/css?family=noto-sans:400,700);
+
+/* CSS Variables */
+:root {
+  --bg-bright: #f7ed6b;
+  --bg-dark: #c64c59;
+  --font-family: 'Noto Sans', sans-serif;
+  --font-weight: 400;
+  --btn-border-radius: 35px;
+  --btn-font-size: 1.6rem;
+  --btn-color: rgba(0, 0, 0, 0.4);
+  --btn-transition: transform 0.1s;
+  --btn-hover-box-shadow: rgba(255, 255, 255, 0.9) 0 3px 2px inset,
+    rgba(0, 0, 0, 0.4) 0 3px 5px, rgba(0, 0, 0, 0.1) 0 10px 13px;
+  --display-bg-color: rgba(0, 0, 0, 0.45);
+  --display-border-radius: 35px;
+  --previous-operand-color: rgba(255, 255, 255, 0.75);
+  --previous-operand-font-size: 1.5rem;
+  --current-operand-color: #ffffff;
+  --current-operand-font-size: 2.5rem;
+  --operand-bg-color: rgba(1, 255, 221, 0.527);
+  --operand-hover-color: rgba(229, 255, 0, 0.89);
+  --operator-bg-color: rgba(1, 217, 255, 0.527);
+  --operator-hover-color: rgba(0, 255, 13, 0.89);
+  --clear-delete-bg-color: rgba(255, 52, 1, 0.527);
+  --clear-delete-hover-color: rgb(255, 0, 0);
+  --equals-bg-color: rgba(255, 208, 1, 0.603);
+  --equals-hover-color: rgb(255, 94, 0);
+  --footer-color: rgba(134, 60, 11, 0.5);
+  --box-shadow-opacity: 0.3;
+}
+
+/* HTML ELEMENTS */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-bright);
+  background: linear-gradient(315deg, var(--bg-bright), var(--bg-dark));
+}
+
+/* GENERAL ELEMENTS */
+button {
+  border: none;
+  outline: none;
+  border-radius: var(--btn-border-radius);
+  cursor: pointer;
+  font-size: var(--btn-font-size);
+  position: relative;
+  color: var(--btn-color);
+  transition: var(--btn-transition);
+}
+
+button::before {
+  background-color: initial;
+  background-image: linear-gradient(
+    rgb(255, 255, 255) 0,
+    rgba(255, 255, 255, 1) 100%
+  );
+  border-radius: 125px;
+  content: '';
+  height: 87%;
+  left: 4%;
+  opacity: var(--box-shadow-opacity);
+  position: absolute;
+  top: 0;
+  transition: all 0.3s;
+  width: 90%;
+}
+
+button:hover {
+  box-shadow: var(--btn-hover-box-shadow);
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* STRUCTURAL ELEMENTS */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  min-height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(4, 5rem);
+  grid-template-rows: minmax(7.2rem, auto) repeat(5, 5rem);
+  gap: 0.5rem;
+}
+
+.display {
+  border-radius: var(--display-border-radius);
+  margin-bottom: 1rem;
+  padding: 10px;
+  grid-column: 1/-1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  word-wrap: break-word;
+  word-break: break-all;
+  background-color: var(--display-bg-color);
+}
+
+.previous-operand {
+  color: var(--previous-operand-color);
+  font-style: italic;
+  font-size: var(--previous-operand-font-size);
+}
+
+.current-operand {
+  font-size: var(--current-operand-font-size);
+  color: var(--current-operand-color);
+}
+
+.__wide {
+  grid-column: span 2;
+}
+
+.operand {
+  background-color: var(--operand-bg-color);
+}
+
+.operand:hover {
+  color: var(--operand-hover-color);
+}
+
+.operator,
+#dot {
+  background-color: var(--operator-bg-color);
+}
+
+.operator:hover,
+#dot:hover {
+  color: var(--operator-hover-color);
+}
+
+.clear,
+.delete {
+  background-color: var(--clear-delete-bg-color);
+}
+
+.clear:hover,
+.delete:hover {
+  color: var(--clear-delete-hover-color);
+}
+
+#equals {
+  background-color: var(--equals-bg-color);
+}
+
+#equals:hover {
+  color: var(--equals-hover-color);
+}
+
+.footer {
+  min-height: 5vh;
+  color: var(--footer-color);
+}
